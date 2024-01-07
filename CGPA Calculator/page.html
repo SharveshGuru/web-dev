@@ -3,12 +3,74 @@
 <head>
     <title>CGPA Calculator</title>
     <style>
-        #heading {
+        #heading{
+            font-family:Verdana, Geneva, Tahoma, sans-serif;
+        }
+        body {
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            background-color: #f2f2f2;  
+        }
+
+        h1, h2, h3 {
+            text-align: center;  
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-top: 30px;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+        }
+
+        label {
+            display: block; 
+            font-weight: bold;
+            margin: 20px 0 10px;
+        }
+
+        input, select {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            border: none;  
+            cursor: pointer;
+            font-size: large;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0062cc;
+        }
+
+        #result {
+            max-width: 600px;   
+            margin: 20px auto;
+            background-color: white;
+            padding: 20px;   
+            border-radius: 5px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.1);  
+        }
+
+        #cgpaValue {
+            font-weight: bold;
             text-align: center;
         }
     </style>
 </head>
-<body style="background-color:#cfcdcc;">
+<body>
     <h1 id="heading">CGPA Calculator</h1><br><br>
     <form id="grades">
         <label for="semcount">Number of Semesters:</label>
@@ -16,7 +78,7 @@
 
         <div id="seminp"></div>
 
-        <input type="submit" value="Calculate CGPA">
+        <input type="submit" id="submitbutton" value="Calculate CGPA">
     </form>
     <div id="result" style="display: none;">
         <h2>CGPA Result:</h2>
