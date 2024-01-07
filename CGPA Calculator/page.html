@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CGPA Calculator</title>
+    <style>
+        #heading {
+            text-align: center;
+        }
+    </style>
+</head>
+<body style="background-color:#cfcdcc;">
+    <h1 id="heading">CGPA Calculator</h1><br><br>
+    <form id="grades">
+        <label for="semcount">Number of Semesters:</label>
+        <input type="number" id="semcount" name="semcount" min="1" required><br><br>
+
+        <div id="seminp"></div>
+
+        <input type="submit" value="Calculate CGPA">
+    </form>
+    <div id="result" style="display: none;">
+        <h2>CGPA Result:</h2>
+        <p id="cgpaValue"></p>
+    </div>
+
+    <script>
+        function gpcal(grade) {
+            switch (grade) {
+                case 'O':
+                    return 10;
+                case 'A+':
+                    return 9;
+                case 'A':
+                    return 8;
+                case 'B+':
+                    return 7;
+                case 'B':
+                    return 6;
+                case 'C':
+                    return 5;
+                case 'U':
+                    return 0;
+                default:
+                    return 0;
+            }
+        }
+
+        document.getElementById('semcount').addEventListener('change', function () {
+            let semcount = parseInt(this.value);
+            let seminp = '';
+            for (let i = 1; i <= semcount; i++) {
+                seminp += `<h3>Semester ${i}</h3>`;
+                seminp += `<label for="semester${i}Courses">Number of Courses:</label>`;
+                seminp += `<input type="number" id="semester${i}Courses" name="semester${i}Courses" min=1 required><br><br>`;
+                seminp += `<div id="semester${i}cinp"></div>`;
+            }
+            document.getElementById('seminp').innerHTML = seminp;
+
+            for (let i = 1; i <= semcount; i++) {
+                document.getElementById(`semester${i}Courses`).addEventListener("change", function () {
+                    let numcourses = parseInt(this.value);
+                    let cinp = "";
+                    for (let j = 1; j <= numcourses; j++) {
+                        cinp += `<label for="semester${i}Course${j}Name">Course Name:</label>`;
+                        cinp += `<input type="text" id="semester${i}Course${j}Name" name="semester${i}Course${j}Name" required>`;
+                        cinp += `<label for="semester${i}Course${j}Grade">Grade Obtained:</label>`;
+                        cinp += `<select id="semester${i}Course${j}Grade" name="semester${i}Course${j}Grade" required>`;
+                        cinp += `<option value="O">O</option>`;
+                        cinp += `<option value="A+">A+</option>`;
+                        cinp += `<option value="A">A</option>`;
+                        cinp += `<option value="B+">B+</option>`;
+                        cinp += `<option value="B">B</option>`;
+                        cinp += `<option value="C">C</option>`;
+                        cinp += `<option value="U">U</option>`;
+                        cinp += `</select>`;
+                        cinp += `<label for="semester${i}Course${j}Credits">Credits:</label>`;
+                        cinp += `<input type="number" id="semester${i}Course${j}Credits" name="semester${i}Course${j}Credits" min="1" required>`;
+                        cinp += `<br><br>`;
+                    }
+                    document.getElementById(`semester${i}cinp`).innerHTML = cinp;
+                });
+            }
+        });
+
+        document.getElementById('grades').addEventListener('submit', function (event) {
+            event.preventDefault();
+            let semcount = document.getElementById("semcount").value;
+            let totalCredits = 0;
+            let totalGradePoints = 0;
+
+            for (let i = 1; i <= semcount; i++) {
+                let coursecount = document.getElementById(`semester${i}Courses`).value;
+                for (let j = 1; j <= coursecount; j++) {
+                    const grade = document.getElementById(`semester${i}Course${j}Grade`).value;
+                    const credits = parseInt(document.getElementById(`semester${i}Course${j}Credits`).value);
+
+                    totalCredits += credits;
+                    totalGradePoints += gpcal(grade) * credits;
+                }
+            }
+
+            let cgpa = (totalGradePoints / totalCredits).toFixed(2);
+            document.getElementById("cgpaValue").innerText = `CGPA: ${cgpa}`;
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('grades').style.display = 'none';
+        });
+    </script>
+</body>
+</html>
